@@ -19,9 +19,6 @@ export class ServiceService<T> {
 
   constructor(private httpClient: HttpClient) { }
 
-  getUserWithHeders(controller:String, method:String):Observable<any>{
-    return this.httpClient.get<any>(this.endPoint + controller + "/" + method,{observe:'response'});
-  }
   getAll(controller:String, method:String):Observable<T[]>{
     return this.httpClient.get<any>(this.endPoint + controller + "/" + method ) as Observable<T[]>;
   }
@@ -37,30 +34,4 @@ export class ServiceService<T> {
   getByIDPhone(controller:string, method: string):Observable<T[]>{
     return this.httpClient.get(this.endPoint + controller + "/" + method) as Observable<T[]>;
   }
-  // Update( controller:string, method:String, obj:any):Observable<T>{
-  //   return this.httpClient.patch(this.endPoint + controller + "/"+ method, JSON.stringify(obj), this.httpOptions)
-  //   .pipe(
-  //     catchError(this.errorHandler)
-  //   ) as Observable<T>;
-  // }
-
-  // Delete(controller:string, method:string, id: number):Observable<T>{
-  //   return this.httpClient.delete(this.endPoint + controller + "/" + method + "/" + id, this.httpOptions)
-  //   .pipe(
-  //     catchError(this.errorHandler)
-  //   ) as Observable<T>;
-  // // }
-
-  // errorHandler(error: any) {
-  //   let errorMessage = '';
-  //   if(error.error instanceof ErrorEvent) {
-  //     // Get client-side error
-  //     errorMessage = error.error.message;
-  //   } else {
-  //     // Get server-side error
-  //     errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-  //   }
-  //   console.log(errorMessage);
-  //   return throwError(()=>errorMessage);
-  // }
 }

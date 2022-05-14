@@ -34,10 +34,8 @@ export class ClienteComponent implements OnInit {
   ngOnInit() {
     this.getAll();
     this.formValidator();
-    //this.refreshClients();
   }
 
-  //get f() { return this.form.controls; }
 
   formValidator() {
     this.form = this.formBuilder.group({
