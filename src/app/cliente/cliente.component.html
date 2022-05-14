@@ -1,0 +1,168 @@
+<div class="container">
+  <h1>Listado de Clientes</h1>
+  <div class="btnCrear">
+    <button class="btn btn-outline-danger" (click)="openCliente(CreateCliente)">Crear</button>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Direccion</th>
+        <th scope="col">Accion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cliente of _cliente; index as i">
+        <td scope="row">{{ i + 1 }}</td>
+
+        <td>
+          {{ cliente.nombre }}
+        </td>
+        <td>{{ cliente.direccion }}</td>
+        <td>
+          <button class="btn btn-outline-primary mb-2 me-2"
+            (click)="clientDetails(TelefonoClienteModalContent, cliente.id)">
+            Detalles
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshClients()">
+    </ngb-pagination>
+
+    <select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshClients()">
+      <option [ngValue]="2">2 items per page</option>
+      <option [ngValue]="4">4 items per page</option>
+      <option [ngValue]="8">8 items per page</option>
+    </select>
+  </div>
+</div>
+
+
+<ng-template #TelefonoClienteModalContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Detalles del CLiente</h4>
+    <button type="button" class="btn btn-outline-dark"  (click)="openTelefono(CreateTelefono)">Agregar</button>
+  </div>
+  <div class="modal-body">
+    <p *ngFor="let telefono of dataTelefono">
+      <strong>Cliente - </strong> {{ telefono.cliente.nombre }} |
+      <Strong>Telefono - </Strong>{{ telefono.numero }}
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">
+      Close
+    </button>
+  </div>
+</ng-template>
+
+
+<ng-template #CreateCliente let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Crear Cliente</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form" autocomplete="off" (ngSubmit)="saveCliente(form)" >
+      <div class="modal-footer">
+        <input type="submit" class="btn btn-outline-success" value="Guardar" />
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="mb-3">
+            <label>Nombre</label>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Nombre" name="nombre" formControlName="nombre" #nombre [value]="nombre">
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="mb-3">
+            <label>Direccion</label>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Direccion" name="direccion" formControlName="direccion" #direccion [value]="direccion">
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+<hr>
+      <div class="row">
+        <div class="col-6">
+          <div class="mb-3">
+            <label>Numero</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="txtPhone" placeholder="Numero" #telefono>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div id="btnAdd" >
+            <button class="btn btn-outline-primary mb-2 me-2" (click)="addPhoneToTable(telefono.value)" id="formul">
+              Añadir Telefono
+            </button>
+          </div>
+        </div>
+      </div>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Telefonos</th>
+           <th scope="col">Accion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cell of telephonesToTable; index as i">
+          <td scope="row">{{ i + 1 }}</td>
+
+          <td>{{ cell }}</td>
+          <td>
+            <button class="btn btn-outline-danger mb-2 me-2"
+              (click)="deletePhone(i)">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+</ng-template>
+
+
+<ng-template #CreateTelefono let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Agregar Telefono</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+      <div class="row">
+        <div class="col-6">
+          <div class="mb-3">
+            <label>Numero</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="txtPhone" placeholder="Numero" #telefono>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div id="btnAdd" >
+            <button class="btn btn-outline-primary mb-2 me-2" (click)="addPhone(telefono.value,_addtelefono)" id="formul">
+              Añadir Telefono
+            </button>
+          </div>
+        </div>
+      </div>
+  </div>
+</ng-template>
+
+<hr>
